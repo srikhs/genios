@@ -1,0 +1,397 @@
+<?php
+ini_set( "display_errors", 0);
+session_start();
+if(!session_is_registered(myusername)){
+header("location:main_login.php");
+}
+?>
+
+<?php include 'database.php'; 
+?>
+<?php
+session_start();
+$minutes = 45; 
+$seconds = 0; 
+$time_limit = ($minutes * 60) + $seconds + 1; 
+if(!isset($_SESSION["start_time2"])){$_SESSION["start_time2"] = mktime(date('G'),date('i'),date('s'),date('m'),date('d'),date('Y')) + $time_limit;} 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>ELECTRONICS CONTEST - GENIOS 13 - ONLINE SYMPOSIUM - IEEE MADRAS SECTION STUDENT NETWORK</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link href="favi.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- styles --><link href='http://fonts.googleapis.com/css?family=Exo' rel='stylesheet' type='text/css'>
+<link href="assets/css/bootstrap.css" rel="stylesheet" />
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="assets/css/docs.css" rel="stylesheet" />
+<link href="assets/css/prettyPhoto.css" rel="stylesheet" />
+<link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet" />
+<link href="assets/css/nivo-slider.css" rel="stylesheet" />
+<link href="assets/css/style.css" rel="stylesheet" />
+<link href="assets/color/success.css" rel="stylesheet" />
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<script src="assets/js/jquery-1.8.2.min.js"></script>
+<script src="assets/js/jquery.easing.1.3.js"></script>
+<script src="assets/js/google-code-prettify/prettify.js"></script>
+<script src="assets/js/modernizr.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/jquery.elastislide.js"></script>
+<script src="assets/js/jquery.flexslider.js"></script>
+<script src="assets/js/jquery.tweet.js"></script>
+<script src="assets/js/jquery.prettyPhoto.js"></script>
+<script src="assets/js/application.js"></script>
+<script src="assets/js/nivo/jquery.nivo.slider.js"></script>
+<script src="assets/js/nivo/setting.js"></script>
+<!-- Portfolio hover -->
+<script src="assets/js/hover/jquery-hover-effect.js"></script>
+<script src="assets/js/hover/setting.js"></script>
+<script src="assets/js/custom.js"></script>
+<style type="text/css">
+#txt {
+border:2px solid red;
+font-family:verdana;
+font-size:16pt;
+font-weight:bold;
+background: #FECFC7;
+width:70px;
+text-align:center;
+color:#000000;
+}
+</style>
+
+<!-- fav and touch icons -->
+<link rel="shortcut icon" href="assets/ico/favicon.ico" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=619398168122780";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div class="container">
+<img src="board.png">
+    </div><br>
+
+
+<div class="jumbotron masthead">
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+			 <ul class="nav nav-tabs"> 
+			  <li> 
+			 <a href="../index.html">Home</a> </li> 
+		  <li><a href="../register.php">Register</a></li>
+			 <li><a href="../events.html">Events</a></li> 
+			 <li><a href="../genios12.html">Genios'12</a></li> 
+			 <li><a href="../sponsors.html">Sponsors</a></li> 
+			 
+				 <li><a href="../webinar.html"> Webinar</a></li> 
+			 <li><a href="../contact.html">Contact</a></li> 
+			</ul>
+			 	
+	
+					
+			
+				
+			</div>
+		</div>
+	</div>
+</div><center><h1>Electronics Contest</h1></center>
+<section id="maincontent">
+<div class="container">
+
+	<div class="row">
+		<div class="span3">
+		
+
+			<aside>
+			<a class="btn btn-large btn-block btn-success" href="index.html">Home</a>
+			<a class="btn btn-large btn-block btn-primary" href="rules.html">Rules</a><br>
+<center><input id="txt" readonly>
+			<script>
+var ct = setInterval("calculate_time()",100); 
+function calculate_time()
+{
+
+ var end_time = "<?php echo $_SESSION["start_time2"]; ?>"; 
+ var dt = new Date(); 
+ var time_stamp = dt.getTime()/1000; 
+ var total_time = end_time - Math.round(time_stamp); 
+ var mins = Math.floor(total_time / 60); 
+ var secs = total_time - (mins * 60); 
+ if(secs < 10){secs = "0" + secs;}
+ document.getElementById("txt").value = mins + ":" + secs; 
+ if(mins <= 0)
+ {
+  if(secs <= 0 || mins < 0)
+  {
+   clearInterval(ct);
+   document.getElementById("txt").value = "0:00";
+   window.location.href = "timeout.php";
+   }
+  }
+ }
+</script></center>
+	<br>
+			 			 
+		
+			
+			</aside>
+		</div>	
+		<div class="span8">
+
+<form id="test" action="process.php" method="post">
+
+	<div id="test" onmousedown='return false;' onselectstart='return false;'>		
+			 
+			<h4>1. Zener diodes are most commonly used in:<br>
+<input type="radio" id="1" name="1" value="1"> Voltage amplifier circuits.<br>
+<input type="radio" id="1" name="1" value="2"> Oscillator circuits.<br>
+<input type="radio" id="1" name="1" value="3"> Power supply circuits.<br>
+<input type="radio" id="1" name="1" value="4"> Current limiting circuits.<br>
+<hr>
+
+2.  Compared to bipolar transistors, field effect transistors are NOT normally 
+<br>
+<input type="radio" id="2" name="2" value="1"> High input impedance<br>
+<input type="radio" id="2" name="2" value="2"> A reverse-biased PN junction<br>
+<input type="radio" id="2" name="2" value="3"> Low input impedance<br>
+<input type="radio" id="2" name="2" value="4"> Low power consumption<br>
+<hr>
+
+3. What is the approximate peak-to-peak voltage of a 2 VRMS sine wave? <br>
+
+<input type="radio" id="3" name="3" value="1"> 2.0 Vp-p<br>
+<input type="radio" id="3" name="3" value="2"> 2.8 Vp-p<br>
+<input type="radio" id="3" name="3" value="3"> 4.0 Vp-p<br>
+<input type="radio" id="3" name="3" value="4"> 5.6 Vp-p<br>
+<hr>
+4. The frequency of the second harmonic of 60 Hz is: 
+<br>
+<input type="radio" id="4" name="4" value="1"> 30 Hz<br>
+<input type="radio" id="4" name="4" value="2"> 60 Hz<br>
+<input type="radio" id="4" name="4" value="3"> 120 Hz <br>
+<input type="radio" id="4" name="4" value="4"> 180 Hz <br>
+<hr>
+5. If the frequency of the source is 1 kHz, what is the value of the capacitive 
+reactance (XC) of the circuit if the capacitor value is changed to 0.01 µfd? 
+<br>
+<input type="radio" id="5" name="5" value="1"> XC = 63.6 kΩ<br>
+<input type="radio" id="5" name="5" value="2"> XC = 31.8 kΩ<br>
+<input type="radio" id="5" name="5" value="3"> XC = 15.9 kΩ<br>
+<input type="radio" id="5" name="5" value="4"> XC = 5.0 kΩ<br>
+<hr>
+
+6. Which of the following is NOT an effect of reflective radio frequency (RF) power? <br>
+<input type="radio" id="6" name="6" value="1"> Frequency shift <br>
+<input type="radio" id="6" name="6" value="2"> Poor power transfer  <br>
+<input type="radio" id="6" name="6" value="3"> Radiation of noise  <br>
+<input type="radio" id="6" name="6" value="4"> Increased heat in the source <br>
+<hr>
+7. Compared to an effective voltage of 120 VAC, the average heat energy out of a 
+resistor is __________ for a voltage of 120 VDC.<br>
+<input type="radio" id="7" name="7" value="1"> the same <br>
+<input type="radio" id="7" name="7" value="2"> higher<br>
+<input type="radio" id="7" name="7" value="3"> lower<br>
+<input type="radio" id="7" name="7" value="4"> nonexistent<br>
+<hr>
+8.  What are the characteristics of a coaxial cable? 
+<br>
+
+<input type="radio" id="8" name="8" value="1"> It has twisted pairs with a shield. <br>
+<input type="radio" id="8" name="8" value="2"> It has a center conductor covered with an insulator, then braided 
+or solid outer conductor and then insulation. <br>
+<input type="radio" id="8" name="8" value="3"> It has heavier insulation than most cables. <br>
+ <input type="radio" id="8" name="8" value="4"> It is vulnerable to high frequency interference. <br>
+
+<hr><br></h4>
+	
+<h4>9. If the output filter capacitor in a power supply actually had a value twice its stated 
+value, which of the following symptoms would be found? 
+<br>
+<input type="radio" id="9" name="9" value="1"> The output voltage would be doubled and a small improvement 
+in the ripple voltage would be detected. <br>
+<input type="radio" id="9" name="9" value="2"> The ripple voltage would be half of what is expected and a 
+small increase in the output voltage would be detected. <br>
+<input type="radio" id="9" name="9" value="3"> The output and ripple voltage would be greater than expected. <br>
+<input type="radio" id="9" name="9" value="4"> The output and ripple voltage would be less than expected. <br>
+<hr><br></h4>
+<h4>	
+10. Why is it important to maintain an impedance match from the source to the load when sending signals? <br>
+<input type="radio" id="10" name="10" value="1"> to reduce external noise<br>
+
+<input type="radio" id="10" name="10" value="2"> to keep the line balanced 
+<br>
+
+<input type="radio" id="10" name="10" value="3"> to reduce reflected energy 
+<br>
+
+<input type="radio" id="10" name="10" value="4"> to reduce attenuation<br>
+<hr>
+11. The amount of useful output power provided by a device is 1.5 W. It is powered by a 48-V supply with 100 mA of current. How much power is wasted in heat? <br>
+<input type="radio" id="11" name="11" value="1"> 1.5 W 
+<br>
+
+<input type="radio" id="11" name="11" value="2"> 2.1 W
+<br>
+
+<input type="radio" id="11" name="11" value="3"> 3.3 W 
+ 
+<br>
+
+<input type="radio" id="11" name="11" value="4"> 6.3 W<br>
+<hr>
+
+12. The amount of useful output power provided by a device is 1.5 W. It is powered by a 48-V supply with 100 mA of current. How much power is wasted in heat? <br>
+<input type="radio" id="12" name="12" value="1"> power output 
+<br>
+
+<input type="radio" id="12" name="12" value="2"> amplifier gain 
+<br>
+
+<input type="radio" id="12" name="12" value="3"> heat output  
+ 
+<br>
+
+<input type="radio" id="12" name="12" value="4"> output impedance<br>
+<hr>
+13. Which of the following is one of the functions performed by a diode? <br>
+<input type="radio" id="13" name="13" value="1"> filter 
+<br>
+
+<input type="radio" id="13" name="13" value="2"> amplifier 
+<br>
+
+<input type="radio" id="13" name="13" value="3"> rectifier 
+ 
+<br>
+
+<input type="radio" id="13" name="13" value="4"> inverter <br>
+<hr>
+14. What is the relationship between current (I) and voltage (E) in a circuit consisting of a capacitor in series with a resistor? 
+<br>
+<input type="radio" id="14" name="14" value="1"> I and E are in phase across the capacitor
+<br>
+
+<input type="radio" id="14" name="14" value="2"> I leads E across the resistor. 
+
+<br>
+
+<input type="radio" id="14" name="14" value="3"> E leads I across the capacitor 
+ 
+<br>
+
+<input type="radio" id="14" name="14" value="4"> I and E are in phase across the resistor.
+ <br>
+<hr>
+14. The leads of a multimeter are across a diode in the following manner: 
+Red lead connects to the end of diode with marking band, and the black lead connects on other end. What does a reading of -0.6 volts indicate? 
+ 
+<br>
+<input type="radio" id="14" name="14" value="1"> forward bias, leads connected with proper polarity 
+<br>
+
+<input type="radio" id="14" name="14" value="2"> reverse bias, leads connected with proper polarity
+
+<br>
+
+<input type="radio" id="14" name="14" value="3"> forward bias, leads connected with reverse polarity  
+ 
+<br>
+
+<input type="radio" id="14" name="14" value="4"> reverse bias, leads connected with reverse polarity
+ <br>
+<hr>
+
+
+</h4>
+</div>
+		<!--Value Number--> <input type="hidden" name="name" value="<?php echo $name ?>" />
+         
+
+<input id="sub" class="btn btn-large btn-success" name="submit" type="submit" />
+         
+              
+              </form>
+	
+</div>
+
+			
+	
+
+		</div>
+	</div>
+</div>
+</section>
+
+
+<!-- Footer
+ ================================================== -->
+<footer class="footer">
+<div class="container">
+	<div class="row">
+		<div class="span3">
+			<div class="widget">
+				
+				<address>
+				<strong>Contact us</strong><br />
+				<a href="mailto:ieeegenios@gmail.com">ieeegenios@gmail.com</a>
+				</address>
+				
+			</div>
+		</div>
+	
+		<div class="span6">
+			<div class="widget">
+	<a class="twitter-timeline" href="https://twitter.com/IEEEGeniOS" data-widget-id="389629195749322752">Tweets by @IEEEGeniOS</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    
+			</div>
+		</div>
+		<div class="span3">
+			<div class="widget">
+			<h4>Follow Us</h4>
+    			<a href="https://www.facebook.com/IEEEGeniOS" target="_blank"><img src="fb_1.png"></img></a><br>
+				<a href="http://www.twitter.com/ieeegenios" target="_blank"><img src="twt_1.png"></img></a>
+			
+			</div>
+		</div>
+	</div>
+</div>
+<div class="verybottom">
+	<div class="container">
+		<div class="row">
+			<div class="span6">
+				<p>
+					&copy; IEEE Madras Section Student Network
+			</div>
+			<div class="span6">
+				<p class="pull-right">
+					
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</footer>
+</body>
+</html>
+
